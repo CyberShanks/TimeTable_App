@@ -1,37 +1,75 @@
-html {
-    font-family: sans-serif;
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(17 24 39);
+    color: rgb(209, 213, 219);
+    font-family: Inter, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+/*Scrollbar customization*/
+body::-webkit-scrollbar {
+    width: 1px;
+    /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: rgb(17 24 39);
+    /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(209, 213, 219);
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+}
+
+img {
+    width: auto;
+    height: 32px;
+}
+
+#navbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 15px 20px 15px 15px;
+    margin-bottom: 15px;
+    border-bottom: solid 1px white;
 }
 
-table {
-    font-size: 0.8rem;
-    width: 100%;
-    margin-bottom: 10px;
-    border-collapse: collapse;
-
+h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 100;
 }
 
-td,
-th {
+
+#container {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: auto;
+}
+
+
+
+.time-entry {
+    display: flex;
+}
+
+.time,
+.action {
+    text-align: center;
     padding: 10px 20px;
 }
 
-td {
-    border: 2px solid rgb(27, 5, 5);
-    text-align: center;
-    background-color: rgb(250, 250, 250);
+.time {
+    width: 30%;
+    font-weight: bold;
 }
 
-td:nth-child(2) {
-    background: yellow;
-}
-
-tr:nth-child(2),
-tr:nth-child(9) {
-    border-bottom: dashed 2px red;
-}
-
-.fixed{
-    background-color:rgb(156, 155, 155)
+.action {
+    border: solid 1px black;
+    width: 70%;
 }

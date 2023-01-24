@@ -5,71 +5,141 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <script src="config.js"></script>
     <link rel="stylesheet" href="style.css">
+    
     <title>TimeTable</title>
 </head>
 
 <body>
-    <table>
-        <thead>
-            <!-- contains morning fixed schedule #experimental-->
-        </thead>
-        <tbody>
-            <div class="fixed" id="morning">
-                <tr>
-                    <th scope="row">4:00-4:30</th>
-                    <td>Wake Up</td>
-                </tr>
-                <tr>
-                    <th scope="row">4:30-5:00</th>
-                    <td>Plan Day</td>
-                </tr>
-                <tr>
-                    <th scope="row">5:00-7:00</th>
-                    <td>Work</td>
-                </tr>
+    <div id="navbar">
+        <img id="lock" src="assets/lock.png" alt="455a64">
+        <h1>TimeTable for Tuesday 24/01/2022</h1>
+        <img id="settings" src="assets/setting.png">
+    </div>
+    <div id="container">
+        
+        <div class="time-entry fixed">
+            <div class="time">
+                04:00-04:30
             </div>
-            <div class="block">
-                <tr>
-                    <th scope="row">7:00-8:00</th>
-                    <td>Breakfast</td>
-                </tr>
-                <tr>
-                    <th scope="row">8:00-9:00</th>
-                    <td>Study</td>
-                </tr>
-                <tr>
-                    <th scope="row">9:00-10:00</th>
-                    <td>Prepare College</td>
-                </tr>
-                <tr>
-                    <th scope="row">10:00-6:00</th>
-                    <td>Classes</td>
-                </tr>
-                <tr>
-                    <th scope="row">6:00-6:30</th>
-                    <td>Rest</td>
-                </tr>
-                <tr>
-                    <th scope="row">6:30-8:00</th>
-                    <td>Exercise</td>
-                </tr>
+            <div class="action">
+                Wake Up
             </div>
-            <div class="fixed" id="evening">
-                <tr>
-                    <th scope="row">8:00-9:00</th>
-                    <td>Dinner</td>
-                </tr>
-                <tr>
-                    <th scope="row">9:00-10:00</th>
-                    <td>Sleep</td>
-                </tr>
+        </div>
+        <div class="time-entry fixed">
+            <div class="time">
+                04:30-05:00
             </div>
-        </tbody>
-        <tfoot>
-            <!-- contains evening fixed schedule #experimental-->
-        </tfoot>
-    </table>
+            <div class="action">
+                Plan Day
+            </div>
+        </div>
+        <div class="time-entry fixed">
+            <div class="time">
+                05:00-07:00
+            </div>
+            <div class="action">
+                Work
+            </div>
+        </div>
+        <!-- Morning Fixed Schedule Ends-->
+        <br>
+        <!--Variable Schedule Starts-->
+        <div class="time-entry variable">
+            <div class="time">
+                07:00-08:00
+            </div>
+            <div class="action">
+                Breakfast
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                08:00-09:00
+            </div>
+            <div class="action">
+                Work
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                09:00-10:00
+            </div>
+            <div class="action">
+                Work
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                10:00-11:00
+            </div>
+            <div class="action">
+                Prep College / Shower
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                11:00-12:00
+            </div>
+            <div class="action">
+                Go to College
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                12:00-17:00
+            </div>
+            <div class="action">
+                Classes
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                17:00-18:00
+            </div>
+            <div class="action">
+                Snacks/Study
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                18:00-19:00
+            </div>
+            <div class="action">
+                Exercise
+            </div>
+        </div>
+        <div class="time-entry variable">
+            <div class="time">
+                19:00-20:00
+            </div>
+            <div class="action">
+                Rest
+            </div>
+        </div>
+        <!--Variable Schedule Ends-->
+        <br>
+        <!--Evening Fixed Schedule Starts-->
+        <div class="time-entry fixed">
+            <div class="time">
+                20:00-21:00
+            </div>
+            <div class="action">
+                Dinner
+            </div>
+        </div>
+        <div class="time-entry fixed">
+            <div class="time">
+                21:00-22:00
+            </div>
+            <div class="action">
+                Sleep
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
