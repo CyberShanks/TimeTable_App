@@ -49,32 +49,44 @@ oneHours.forEach(oneHour => {
 //modal window 
 const modal = document.querySelector("#modal-window");
 const page1 = document.querySelector("#page-1");
+
 function displayModalWindow(){
     modal.classList.remove("hide-modal");
     modal.classList.add("show-modal");
-    page1.classList.remove("show-modal");
-    page1.classList.add("hide-modal");
+    page1.classList.remove("show-page1");
+    page1.classList.add("hide-page1");
 }
 
 function hideModalWindow(e){
     modal.classList.remove("show-modal");
     modal.classList.add("hide-modal");
-    page1.classList.remove("hide-modal");
-    page1.classList.add("show-modal");
+    page1.classList.remove("hide-page1");
+    page1.classList.add("show-page1");
 }
+
+let actionNode;
 
 // bubble up action click event handler
 let container = document.querySelector("#container");
 container.addEventListener("click", (e) => {
     //check to see if target has action class
-    if ((e.target).classList == 'action'){
+    if ((e.target).classList == 'action' && ((e.target).parentElement).classList.contains('variable')){
         displayModalWindow();
+        actionNode = e.target;
     }
 })
 
+let svg = document.querySelector("svg");
+svg.addEventListener("click", hideModalWindow);
+
 let options = document.querySelectorAll(".options");
 options.forEach(option => {
-    option.addEventListener("click", hideModalWindow);
+    option.addEventListener("click", () => {
+        hideModalWindow();
+        chosenOption = fetchElementText(option);
+        console.log(chosenOption);
+        actionNode.textContent = chosenOption;
+    });
 })
 
 
