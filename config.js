@@ -1,24 +1,6 @@
-function oneHourClickHandler(oneHour) {
+//time-click functionality
 
-}
-
-let oneHours = document.querySelectorAll(".one");
-oneHours.forEach(oneHour => {
-    oneHour.addEventListener('click', function oneHourClickHandler() {
-        hour = (fetchElementText(oneHour)).slice(0, 2);
-        newTimeEntry = createNewTimeEntry(hour);
-        (oneHour.parentElement).insertAdjacentElement("afterend", newTimeEntry);
-        updatedHourString = String(hour) + ":00-" + String(hour) + ":30";
-        oneHour.textContent = updatedHourString;
-        oneHour.setAttribute("class", "half time");
-        oneHour.removeEventListener('click', oneHourClickHandler);
-        //hour = text within
-        //create another time-entry div with time text = hour:30-hour+1:00, action remains same
-        //change text within time to hour:00-hour:30
-    }
-    )
-})
-
+//create Time-Entry Div and fill time with text
 function createNewTimeEntry(hour) {
     //create new time-entry div
     let newTimeEntry = document.createElement('div');
@@ -45,3 +27,56 @@ function createNewTimeEntry(hour) {
 function fetchElementText(element) {
     return (element.textContent).trim();
 }
+
+
+let oneHours = document.querySelectorAll(".one");
+oneHours.forEach(oneHour => {
+    oneHour.addEventListener('click', function oneHourClickHandler(e) {
+        hour = (fetchElementText(oneHour)).slice(0, 2);
+        newTimeEntry = createNewTimeEntry(hour);
+        (oneHour.parentElement).insertAdjacentElement("afterend", newTimeEntry);
+        updatedHourString = String(hour) + ":00-" + String(hour) + ":30";
+        oneHour.textContent = updatedHourString;
+        oneHour.setAttribute("class", "half time");
+        oneHour.removeEventListener('click', oneHourClickHandler);
+        //dont let event bubble
+        e.stopPropagation();
+    }
+    )
+})
+
+
+//modal window 
+const modal = document.querySelector("#modal-window");
+const page1 = document.querySelector("#page-1");
+function displayModalWindow(){
+    modal.classList.remove("hide-modal");
+    modal.classList.add("show-modal");
+    page1.classList.remove("show-modal");
+    page1.classList.add("hide-modal");
+}
+
+function hideModalWindow(e){
+    modal.classList.remove("show-modal");
+    modal.classList.add("hide-modal");
+    page1.classList.remove("hide-modal");
+    page1.classList.add("show-modal");
+}
+
+// bubble up action click event handler
+let container = document.querySelector("#container");
+container.addEventListener("click", (e) => {
+    //check to see if target has action class
+    if ((e.target).classList == 'action'){
+        displayModalWindow();
+    }
+})
+
+let options = document.querySelectorAll(".options");
+options.forEach(option => {
+    option.addEventListener("click", hideModalWindow);
+})
+
+
+
+
