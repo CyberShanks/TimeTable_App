@@ -1,3 +1,21 @@
+//check if DOM is loaded, to guarantee execution of code
+// Loading hasn't finished yet
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', headerLoadHandler);
+} 
+// DOMContentLoaded has already fired
+else {
+    headerLoadHandler();
+}
+
+//Whenever page is active, check the time
+document.addEventListener("visibilitychange", checkTime);
+
+//checks current time and highlights time-entry 
+function checkTime(){
+
+}
+
 //creates Time-Entry with Time class having whatever type is supplied
 function createNewTimeEntry(type) {
     let newTimeEntry = document.createElement('div');
@@ -65,30 +83,33 @@ function resetBorders() {
 
 //////////////////////////////////////////
 
+
+
 //deletes time-entry divs, from target to dragged index, in the direction provided
-function divCleaner(targetIndex, draggedIndex, direction){
-    if (direction == "up"){
-        for (let index = draggedIndex; index > targetIndex; index--){
+function divCleaner(targetIndex, draggedIndex, direction) {
+    if (direction == "up") {
+        for (let index = draggedIndex; index > targetIndex; index--) {
             container.removeChild(container.children[index])
         }
     }
-    else if (direction == "down"){
-        for (let index = targetIndex-1; index >= draggedIndex; index--){
+    else if (direction == "down") {
+        for (let index = targetIndex - 1; index >= draggedIndex; index--) {
             container.removeChild(container.children[index])
         }
-}}
+    }
+}
 
 // add class to target div
-function classAdder(index){
+function classAdder(index) {
     //fetch time parts to compare
     let timeString1 = fetchElementTimePart(container.children[index].firstElementChild, 1);
     let timeString2 = fetchElementTimePart(container.children[index].firstElementChild, 2);
 
-    time1 = parseInt(timeString1.slice(0,2));
-    time2 = parseInt(timeString2.slice(0,2));
+    time1 = parseInt(timeString1.slice(0, 2));
+    time2 = parseInt(timeString2.slice(0, 2));
 
     //check if hhour difference bigger than 1
-    if (time2 - time1 > 1){
+    if (time2 - time1 > 1) {
         container.children[index].firstElementChild.classList = "multi time";
         container.children[index].firstElementChild.removeEventListener("click", oneHourClickHandler);
     }
@@ -99,7 +120,7 @@ function classAdder(index){
     }
 
     //if time is XX:00-YY:30, its half MULTI/ONE
-    if (checkHalf(timeString1, timeString2) == 1 || checkHalf(timeString1, timeString2) == 2){
+    if (checkHalf(timeString1, timeString2) == 1 || checkHalf(timeString1, timeString2) == 2) {
         container.children[index].firstElementChild.classList.add("half");
     }
 }
@@ -117,16 +138,29 @@ function oneHourClickHandler(e) {
         //create new time entry
         newTimeEntry = createNewTimeEntry("one");
 
+        let hour = firstPart.slice(0, 2);
+        const intHour = parseInt(hour);
+
+        let newTimeString;
+        let updatedTimeString;
+
         //see which part contains half hour, 1st or 2nd part
         let halfPart = checkHalf(firstPart, secondPart);
+
+        /*The If-Else that appear within the halfPart cases are to properly format timestrings for 1 digit time */
+
         if (halfPart == 1) {
             //set time for new TimeEntry
-            let hour = firstPart.slice(0, 2);
-            let newTimeString = String(parseInt(hour) + 1) + ":00-" + secondPart;
+            
+            if (intHour < 9) newTimeString = '0' + String(intHour + 1) + ":00-" + secondPart;
+            else newTimeString = String(intHour + 1) + ":00-" + secondPart;
+            
             newTimeEntry.firstElementChild.textContent = newTimeString;
 
             //update existing Time-Entry time range
-            let updatedTimeString = firstPart + "-" + String(parseInt(hour) + 1) + ":00";
+            if (intHour < 9) updatedTimeString = firstPart + "-0" + String(intHour + 1) + ":00";
+            else updatedTimeString = firstPart + "-" + String(intHour + 1) + ":00";
+
             e.target.textContent = updatedTimeString;
 
             //insert below target
@@ -134,12 +168,15 @@ function oneHourClickHandler(e) {
         }
         else if (halfPart == 2) {
             //set time for new TimeEntry
-            let hour = firstPart.slice(0, 2);
-            let newTimeString = firstPart + "-" + String(parseInt(hour) + 1) + ":00";
+            if (intHour < 9) newTimeString = firstPart + "-0" + String(intHour + 1) + ":00";
+            else newTimeString = firstPart + "-" + String(intHour + 1) + ":00";
+
             newTimeEntry.firstElementChild.textContent = newTimeString;
 
             //update existing Time-Entry time range
-            let updatedTimeString = String(parseInt(hour) + 1) + ":00-" + secondPart;
+            if (intHour < 9) updatedTimeString = '0' + String(intHour + 1) + ":00-" + secondPart;
+            else updatedTimeString = String(intHour + 1) + ":00-" + secondPart;
+
             e.target.textContent = updatedTimeString;
 
             //insert above target
@@ -191,7 +228,7 @@ function optionClickHandler(e) {
 }
 
 // time-entry Drag Event Handler <<Initialization>> Function
-function timeEntryDragHandler(e){
+function timeEntryDragHandler(e) {
     //get and store time text by part
     let timeDraggedpart1 = fetchElementTimePart(e.target.firstElementChild, 1);
     let timeDraggedpart2 = fetchElementTimePart(e.target.firstElementChild, 2);
@@ -210,10 +247,10 @@ function timeEntryDragHandler(e){
 function dragover_handler(e) {
     //prevent default dragover action
     e.preventDefault();
-    
+
     // making sure that time-entry is selected as target
     let target = e.target;
-    if (e.target.classList.contains('time') || e.target.classList.contains('action')){
+    if (e.target.classList.contains('time') || e.target.classList.contains('action')) {
         target = e.target.parentElement;
     }
     // highlight effect
@@ -226,7 +263,7 @@ function drop_handler(e) {
     e.preventDefault();
     //make sure target is time-entry div
     let target = e.target;
-    if (e.target.classList.contains('time') || e.target.classList.contains('action')){
+    if (e.target.classList.contains('time') || e.target.classList.contains('action')) {
         target = e.target.parentElement;
     }
     //fetch data
@@ -263,13 +300,41 @@ function drop_handler(e) {
 
     targetNodeChildIndex = Array.prototype.indexOf.call(container.children, target);
     target.firstElementChild.textContent = newTimeString;
-    
+
     //change class of target element
     classAdder(targetNodeChildIndex);
 
     //RESET BORDERS BROKEN
     resetBorders();
     target.style.border = ''
+}
+
+// DOM Content Loaded Event Handler Function
+function headerLoadHandler() {
+    const today = new Date();
+
+    // getting day using Date/Time Format to get it in words
+    todayDay = today.getUTCDay();
+    const options = { weekday: "long" };
+    const dayString = new Intl.DateTimeFormat("en-US", options).format(todayDay);
+    day = document.querySelector("#day");
+    day.textContent = dayString;
+
+    // getting date
+    todayDate = today.getUTCDate();
+    todayMonth = today.getUTCMonth() + 1;
+    todayYear = today.getUTCFullYear();
+
+    //formatting month string
+    if (todayMonth / 10 != 0) {
+        todayMonth = '0' + String(todayMonth);
+    }
+
+    const dateString = String(todayDate) + '/' + String(todayMonth) + '/' + String(todayYear);
+    date = document.querySelector("#date");
+    date.textContent = dateString;
+
+    checkTime();
 }
 
 /*Event Listeners */
@@ -303,3 +368,4 @@ timeEntries.forEach(timeEntry => {
     timeEntry.setAttribute("ondragover", "dragover_handler(event)");
     timeEntry.addEventListener("dragstart", timeEntryDragHandler);
 });
+
