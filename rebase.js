@@ -23,7 +23,6 @@ function createNewTimeEntry(type) {
     // if one or multi, also add click event
     if (type == "one" || type == "multi") {
         newTime.addEventListener('click', oneHourClickHandler);
-        console.log("click event added");
     }
 
     let newAction = document.createElement('div');
@@ -212,7 +211,6 @@ function actionClickHandler(e) {
 function optionClickHandler(e) {
     hideModalWindow();
     chosenOption = e.target.textContent.trim();
-    console.log(chosenOption);
     actionNode.textContent = chosenOption;
 }
 
@@ -221,9 +219,7 @@ function timeEntryDragHandler(e) {
     //get and store time text by part
     let timeDraggedpart1 = fetchElementTimePart(e.target.firstElementChild, 1);
     let timeDraggedpart2 = fetchElementTimePart(e.target.firstElementChild, 2);
-    console.log(e.target);
-    console.log(timeDraggedpart1);
-    console.log(timeDraggedpart2);
+
     e.dataTransfer.setData("text/time1", timeDraggedpart1);
     e.dataTransfer.setData("text/time2", timeDraggedpart2);
 
@@ -259,19 +255,16 @@ function drop_handler(e) {
     let draggedNodeChildIndex = e.dataTransfer.getData("text/node");
     let draggedTime1 = e.dataTransfer.getData("text/time1");
     let draggedTime2 = e.dataTransfer.getData("text/time2");
-    console.log(draggedTime1);
-    console.log(draggedTime2);
 
     //find required vars
     let targetNodeChildIndex = Array.prototype.indexOf.call(container.children, target);
-    console.log(targetNodeChildIndex);
     targetTime1 = fetchElementTimePart(target.firstElementChild, 1);
     targetTime2 = fetchElementTimePart(target.firstElementChild, 2);
 
     //if dragged up
     if (draggedNodeChildIndex > targetNodeChildIndex) {
         //time becomes -> target:hour => 1st part of target time + 2nd part of dragged Element time
-        newTimeString = targetHour1 + '-' + draggedTime2;
+        newTimeString = targetTime1 + '-' + draggedTime2;
         divCleaner(targetNodeChildIndex, draggedNodeChildIndex, "up");
     }
 
