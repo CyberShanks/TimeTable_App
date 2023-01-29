@@ -2,18 +2,10 @@
 // Loading hasn't finished yet
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', headerLoadHandler);
-} 
+}
 // DOMContentLoaded has already fired
 else {
     headerLoadHandler();
-}
-
-//Whenever page is active, check the time
-document.addEventListener("visibilitychange", checkTime);
-
-//checks current time and highlights time-entry 
-function checkTime(){
-
 }
 
 //creates Time-Entry with Time class having whatever type is supplied
@@ -80,9 +72,6 @@ function hideModalWindow(e) {
 function resetBorders() {
     timeEntries.forEach(timeEntry => timeEntry.style.border = '');
 }
-
-//////////////////////////////////////////
-
 
 
 //deletes time-entry divs, from target to dragged index, in the direction provided
@@ -151,10 +140,10 @@ function oneHourClickHandler(e) {
 
         if (halfPart == 1) {
             //set time for new TimeEntry
-            
+
             if (intHour < 9) newTimeString = '0' + String(intHour + 1) + ":00-" + secondPart;
             else newTimeString = String(intHour + 1) + ":00-" + secondPart;
-            
+
             newTimeEntry.firstElementChild.textContent = newTimeString;
 
             //update existing Time-Entry time range
@@ -311,19 +300,17 @@ function drop_handler(e) {
 
 // DOM Content Loaded Event Handler Function
 function headerLoadHandler() {
-    const today = new Date();
-
     // getting day using Date/Time Format to get it in words
-    todayDay = today.getUTCDay();
-    const options = { weekday: "long" };
-    const dayString = new Intl.DateTimeFormat("en-US", options).format(todayDay);
-    day = document.querySelector("#day");
-    day.textContent = dayString;
+    const date = new Date();
+    dayString = date.toLocaleDateString('en-US', { weekday: 'long', });
+    let dayNode = document.querySelector("#day");
+    dayNode.textContent = dayString;
 
     // getting date
-    todayDate = today.getUTCDate();
-    todayMonth = today.getUTCMonth() + 1;
-    todayYear = today.getUTCFullYear();
+    const today = new Date();
+    todayDate = today.getDate();
+    todayMonth = today.getMonth() + 1;
+    todayYear = today.getFullYear();
 
     //formatting month string
     if (todayMonth / 10 != 0) {
@@ -331,10 +318,8 @@ function headerLoadHandler() {
     }
 
     const dateString = String(todayDate) + '/' + String(todayMonth) + '/' + String(todayYear);
-    date = document.querySelector("#date");
-    date.textContent = dateString;
-
-    checkTime();
+    let dateNode = document.querySelector("#date");
+    dateNode.textContent = dateString;
 }
 
 /*Event Listeners */
@@ -346,7 +331,6 @@ oneHours.forEach(oneHour => {
 });
 
 // bubble up --Action-- Click Event
-let container = document.querySelector("#container");
 container.addEventListener("click", actionClickHandler);
 
 // --svg-- Click Event

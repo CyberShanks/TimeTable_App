@@ -10,6 +10,12 @@ body {
     font-family: Inter, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
+span {
+    margin: 0;
+    padding: 0;
+    
+}
+
 /*Scrollbar customization*/
 body::-webkit-scrollbar {
     width: 1px;
@@ -32,6 +38,7 @@ img {
     width: auto;
     height: 32px;
 }
+
 
 #navbar {
     display: flex;
